@@ -19,20 +19,28 @@ function maxSubArray(array) {
   var index1 = 0;
   var index2 = 0;
   var diffAux = 0;
-  var diff = 0;
+  var diff = 1;
+  var indexAux1 = 0;
+  var indexAux2 = 0;
   var i = 0;
   var previous = 0;
-  var subArray;
 
   _.forEach(array, function (value) {
-    if (value < previous) {
-      index1 = i;
+    if (value > previous) {
+      index2 = i + 1;
+      diffAux = index2 - index1;
+      if (diffAux >= diff) {
+        diff = diffAux; 
+        indexAux1 = index1;
+        indexAux2 = index2;
+      }
     } else {
-      index2 = i;
+      index1 = i;
     }
-    previous = value;
     i++;
+    previous = value;
   });
+  return _.slice(array, indexAux1, indexAux2);
 };
 
 /*
@@ -118,7 +126,9 @@ function pushPop(cadena) {
 
 
 server.listen(port, hostname, () => {
-  console.log("Uno", maxSubArray([3, 2, 5, 9, 1, 3]));
+  console.log("Uno", maxSubArray([3, 2, 5, 9, 1, 3, 4, 5, 6, 7, 8, 9, 10,1,2,3]));
+  console.log("Uno", maxSubArray([3, 1, 7, 1, 2, 1]));
+  console.log("Uno", maxSubArray([3, 1, 3, 7, 1, 2, 1]));
   console.log("Dos", sumOne(2, 7));
   console.log("Tres", sortArrayPosition([4,3,2,6,8,3,4,5,6,7,2,3,4,5], 7));
   console.log("Tres", sortArrayPosition([2,3,1], 2));
