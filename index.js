@@ -1,5 +1,4 @@
 var _ = require('lodash');
-var array = [3, 2, 5, 9, 1, 3];
 const http = require('http');
 
 const hostname = '127.0.0.1';
@@ -41,7 +40,7 @@ function maxSubArray(array) {
 */
 function sumOne(n, m) {
   var arrayMax = [];
-  for (i = n; i<=m; i++) {
+  for (i = n; i <= m; i++) {
     arrayMax.push(i);
   }
   return arrayMax;
@@ -49,15 +48,29 @@ function sumOne(n, m) {
 
 /* Dado un arreglo de números desordenado y un entero k, escribe una función que
 encuentre el k-ésimo elemento más grande.*/
-
-/*Escribe una función que reciba un arreglo de números y quite los elementos duplicados*/
-function keepOutDcuplicated(n, m) {
-  // var set = new Set( array.map( JSON.stringify))
-  // var arrSinDuplicaciones = Array.from( set ).map( JSON.parse );
+function sortArrayPosition(array, k) {
+  for (var i = 0; i < array.length ; i++) {
+    for(var j = 0 ; j < array.length - i - 1; j++) {
+    if (array[j] > array[j + 1]) {
+      var temp = array[j];
+      array[j] = array[j+1];
+      array[j + 1] = temp;
+    }
+   }
+  }
+  for (i = array.length; i>=0; i--) {
+    if (array[i] === k) {
+      return i;
+    }
+  }
+  return -1;
 };
 
-
-
+/*Escribe una función que reciba un arreglo de números y quite los elementos duplicados*/
+function keepOutDcuplicated(array) {
+  var set = new Set(array);
+  return Array.from(set);
+};
 
 /* Dada una cadena de paréntesis y corchetes escribe una función que regresa si la
   cadena está bien balanceada, es decir, por cada paréntesis o corchete que abre hay uno
@@ -70,14 +83,14 @@ function pushPop(cadena) {
   var aux = "";
 
   _.forEach(cadena, function (value) {
-   if (value === '(' || value === '[') {
-    pila1.push(value);
-   } else if (value === ')' || value === ']') {
-    pila2.push(value);
-   }
+    if (value === '(' || value === '[') {
+      pila1.push(value);
+    } else if (value === ')' || value === ']') {
+      pila2.push(value);
+    }
   });
 
-  for (i = 0; i< pila1.length; i++) {
+  for (i = 0; i < pila1.length; i++) {
     aux = pila2.pop();
 
     if (pila1[i] === "[") {
@@ -87,7 +100,7 @@ function pushPop(cadena) {
     } else if (pila1[i] === "(") {
       if (aux !== ")") {
         return false;
-      } 
+      }
     } else {
       return false;
     }
@@ -105,11 +118,13 @@ function pushPop(cadena) {
 
 
 server.listen(port, hostname, () => {
-  console.log("Uno", maxSubArray(array));
-  console.log("Dos", sumOne(2,7));
+  console.log("Uno", maxSubArray([3, 2, 5, 9, 1, 3]));
+  console.log("Dos", sumOne(2, 7));
+  console.log("Tres", sortArrayPosition([4,3,2,6,8,3,4,5,6,7,2,3,4,5], 7));
+  console.log("Tres", sortArrayPosition([2,3,1], 2));
+  console.log("Cuatro", keepOutDcuplicated([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3]));
   console.log("Cinco", pushPop("([)]".split("")));
   console.log("Cinco", pushPop("([])".split("")));
-
 });
 
 
