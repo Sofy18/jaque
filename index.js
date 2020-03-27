@@ -47,8 +47,19 @@ function sumOne(n, m) {
   return arrayMax;
 };
 
-/*
-  Dada una cadena de paréntesis y corchetes escribe una función que regresa si la
+/* Dado un arreglo de números desordenado y un entero k, escribe una función que
+encuentre el k-ésimo elemento más grande.*/
+
+/*Escribe una función que reciba un arreglo de números y quite los elementos duplicados*/
+function keepOutDcuplicated(n, m) {
+  // var set = new Set( array.map( JSON.stringify))
+  // var arrSinDuplicaciones = Array.from( set ).map( JSON.parse );
+};
+
+
+
+
+/* Dada una cadena de paréntesis y corchetes escribe una función que regresa si la
   cadena está bien balanceada, es decir, por cada paréntesis o corchete que abre hay uno
   al mismo nivel que que cierra. Por ejemplo si recibe ‘([])’ tiene que regresar true y si
   recibe ‘([)]’ tiene que regresar false.
@@ -59,31 +70,25 @@ function pushPop(cadena) {
   var aux = "";
 
   _.forEach(cadena, function (value) {
-   if (_.isEqual(value, '(')  || _.isEqual(value, '[')) {
+   if (value === '(' || value === '[') {
     pila1.push(value);
-    console.log(pila1);
-   } else if (_.isEqual(value, ')')  || _.isEqual(value, ']')) {
+   } else if (value === ')' || value === ']') {
     pila2.push(value);
    }
   });
 
-  console.log("adios", pila1);
-
-  for (i = pila1.length; i > 0; i--) {
+  for (i = 0; i< pila1.length; i++) {
     aux = pila2.pop();
-    console.log("hola", pila1[i]);
+
     if (pila1[i] === "[") {
       if (aux !== "]") {
-        console.log("hola1", pila1[i], aux);
         return false;
       }
     } else if (pila1[i] === "(") {
       if (aux !== ")") {
-        console.log("hola2", pila1[i], aux);
         return false;
       } 
     } else {
-      console.log("hola3", pila1[i], aux);
       return false;
     }
   }
@@ -103,6 +108,8 @@ server.listen(port, hostname, () => {
   console.log("Uno", maxSubArray(array));
   console.log("Dos", sumOne(2,7));
   console.log("Cinco", pushPop("([)]".split("")));
+  console.log("Cinco", pushPop("([])".split("")));
+
 });
 
 
