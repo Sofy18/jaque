@@ -30,7 +30,7 @@ function maxSubArray(array) {
       index2 = i + 1;
       diffAux = index2 - index1;
       if (diffAux >= diff) {
-        diff = diffAux; 
+        diff = diffAux;
         indexAux1 = index1;
         indexAux2 = index2;
       }
@@ -57,16 +57,16 @@ function sumOne(n, m) {
 /* Dado un arreglo de números desordenado y un entero k, escribe una función que
 encuentre el k-ésimo elemento más grande.*/
 function sortArrayPosition(array, k) {
-  for (var i = 0; i < array.length ; i++) {
-    for(var j = 0 ; j < array.length - i - 1; j++) {
-    if (array[j] > array[j + 1]) {
-      var temp = array[j];
-      array[j] = array[j+1];
-      array[j + 1] = temp;
+  for (var i = 0; i < array.length; i++) {
+    for (var j = 0; j < array.length - i - 1; j++) {
+      if (array[j] > array[j + 1]) {
+        var temp = array[j];
+        array[j] = array[j + 1];
+        array[j + 1] = temp;
+      }
     }
-   }
   }
-  for (i = array.length; i>=0; i--) {
+  for (i = array.length; i >= 0; i--) {
     if (array[i] === k) {
       return i;
     }
@@ -123,18 +123,59 @@ function pushPop(cadena) {
   que encuentre ese número de salones, por ejemplo si tienes clases de 11:00 a 14:00,
   12:00 a 15:00 y 14:30 a 16:00 el menor número de salones es 2.
 */
+function six(arreglo) {
+  var contador = 0, noSalones = 0;
+  var leng = arreglo.length;
+  for (var i = 0; i < leng; i = i + 2) {
+    for (var j = 0; j < leng; j = j + 2) {
+      if (i == j) {
+      }
+      else {
+        if (arreglo[i] <= arreglo[j]) {
+          if (isOverlapping(arreglo[i], arreglo[i + 1], arreglo[j], arreglo[j + 1]) === false) {
+            contador++;
+          }
+        }
+        else {
+          if (isOverlapping(arreglo[j], arreglo[j + 1], arreglo[i], arreglo[i + 1]) === false) {
+            contador++;
+          }
+        }
+
+      }
+    }
+
+  }
+  if (contador == 0)
+    contador = 2;
+  if (contador == 2)
+    contador = 4;
+  return contador / 2;
+}
+
+function isOverlapping(start1, end1, start2, end2) {
+  var n = true;
+  if (start1 < start2 && end1 <= start2 && end1 < end2) {
+    n = true;
+  } else {
+    n = false;
+  }
+  return n;
+}
 
 
 server.listen(port, hostname, () => {
-  console.log("Uno", maxSubArray([3, 2, 5, 9, 1, 3, 4, 5, 6, 7, 8, 9, 10,1,2,3]));
+  console.log("Uno", maxSubArray([3, 2, 5, 9, 1, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3]));
   console.log("Uno", maxSubArray([3, 1, 7, 1, 2, 1]));
   console.log("Uno", maxSubArray([3, 1, 3, 7, 1, 2, 1]));
   console.log("Dos", sumOne(2, 7));
-  console.log("Tres", sortArrayPosition([4,3,2,6,8,3,4,5,6,7,2,3,4,5], 7));
-  console.log("Tres", sortArrayPosition([2,3,1], 2));
+  console.log("Tres", sortArrayPosition([4, 3, 2, 6, 8, 3, 4, 5, 6, 7, 2, 3, 4, 5], 7));
+  console.log("Tres", sortArrayPosition([2, 3, 1], 2));
   console.log("Cuatro", keepOutDcuplicated([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3]));
   console.log("Cinco", pushPop("([)]".split("")));
   console.log("Cinco", pushPop("([])".split("")));
+  console.log("Seis", six([11,14,12,15,14,16]));
+  console.log("Seis", six([1,3,1,5,2,3]));
 });
 
 
